@@ -17,8 +17,8 @@ from src.User import User
 
 # Pour récupérer les 10 personnes qui apparaissent le plus de fois dans notre base
 
-# top = db.getTopAuthors()
-# print([e.username for e in top])
+top = db.getTopAuthors()
+print([e.username for e in top])
 
 
 # TESTS
