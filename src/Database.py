@@ -126,3 +126,28 @@ def deleteAuthors() -> int:
         conn.commit()
         deletedAuthors += 1
     return deletedAuthors
+
+def getTotalTweetsNumber() -> int:
+    """Renvoie le nombre total de tweets dans la base de données"""
+    c.execute("""SELECT COUNT(*) FROM tweets""")
+    result = c.fetchone()
+    return result[0]
+
+def getTotalAuthorsNumber() -> int:
+    """Renvoie le nombre total d'auteurs dans la base de données"""
+    c.execute("""SELECT COUNT(*) FROM auteurs""")
+    result = c.fetchone()
+    return result[0]
+
+def getAuthorCountWithMoreThanXTweets(tweetNumber:int = 0):
+    c.execute("""SELECT COUNT(*) FROM (SELECT auteurs.id, COUNT(tweets.id) as nbTweets FROM auteurs, tweets WHERE tweets.auteur = auteurs.id GROUP BY auteurs.id HAVING nbTweets >= ?);""",(tweetNumber,))
+    result = c.fetchone()
+    return result[0]
+
+def getTweetsNumberByList(list:str):
+    """Renvoie le nombre de tweets correspondant à une liste particulière.\n
+    Choix possibles :\n
+    lgbtq, racisme, sexuel_misogyne, con, pejoratif, banal, devalorisant, suicide, emojis"""
+    c.execute("""SELECT COUNT(*) FROM tweets WHERE detecte LIKE ?""",("%"+str(list)+"%",))
+    result = c.fetchone()
+    return result[0]
