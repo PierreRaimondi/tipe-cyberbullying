@@ -1,10 +1,7 @@
-import requests
-import json
-from config import api
-import src.Database as db
+import requests, json, time as t, src.Database as db
+from config import api, lists
 from src.User import User
 from src.Tweet import Tweet
-import time as t
 
 def get_rules(headers):
     response = requests.get(
@@ -40,27 +37,56 @@ def delete_all_rules(headers, rules):
     print((" RÈGLES SUPPRIMÉES ({}) ".format(deletedRulesNumber)).center(70,('=')))
     # print(json.dumps(response.json()))
 
+def createRulesFromLists():
+    lists_names = [i for i in dir(lists) if not i.startswith("__")]
+    global_rules = []
+    for i in lists_names:
+        lst = getattr(lists, i)
+        rule_words = []
+        char_count = 0
+        word_count = 0
+        for j in lst:
+            if char_count + len(j) + 4 >= 512 or word_count + len(str(j).split()) >= 30:
+                str_lst = ""
+                for k in rule_words:
+                    str_lst += k + " OR "
+                str_lst = str_lst[:-4]
+                global_rules.append({"value": "({}) lang:fr -is:retweet -is:quote".format(str_lst),"tag": "{}".format(i)})
+                char_count = 0
+                word_count = 0
+                rule_words = []
+            rule_words.append(j)
+            char_count += len(j) + 4
+            word_count += len(str(j).split())
+        if len(rule_words) != 0:
+            str_lst = ""
+            for k in rule_words:
+                str_lst += k + " OR "
+            str_lst = str_lst[:-4]
+            global_rules.append({"value": "({}) lang:fr -is:retweet -is:quote".format(str_lst),"tag": "{}".format(i)})
+    return global_rules
 
 def set_rules(headers):
-    sample_rules = [
-        # Les règles sont de la forme suivante :
-        # {"value": "(mot1 OR mot2 OR mot3 OR ...) lang:fr -is:retweet -is:quote","tag": "nomDeLaRègle"},
-        # La valeur "OR" permet de chercher le mot1 OU le mot2 OU le mot3...
-        # "lang:fr" permet de récupérer seulement les tweets en français
-        # -is:retweet permet de retirer les retweets
-        # -is:quote permet de retirer les citations
-        # "tag": "nomDeLaRègle" permet de donner un nom à notre règle (utilisé pour le 2e filtrage)
-        {"value": "(gouine OR tarlouze OR tantouze OR sodomite OR pédé OR pd OR pédale OR tafiole OR tapette OR travelo OR lopette OR encule OR chbeb) lang:fr -is:retweet -is:quote","tag": "lgbtq"},
-        {"value": "(nègre OR bougnoul OR chintoque OR melon OR bamboula OR youpin OR niakoué OR sale noir OR sale juif OR beurette OR beur OR babtou OR blédard OR métèque OR feuj OR boukak OR muzz) lang:fr -is:retweet -is:quote","tag": "racisme"},
-        {"value": "(garage à bite OR pute OR sac à foutre OR pétasse OR pouffiasse OR pouffe OR cul OR nique OR salope OR petite bite OR chienne OR mal baisée OR chaudasse OR gaupe OR gueniche) lang:fr -is:retweet -is:quote","tag": "sexuel_misogyne"},
-        {"value": "(conne OR connasse OR connard OR con OR counifle) lang:fr -is:retweet -is:quote","tag": "con"},
-        {"value": "(ivrogne OR pochtronne OR clochard OR clodo OR plouc OR bouffon) lang:fr -is:retweet -is:quote","tag": "pejoratif"},
-        {"value": "(grognasse OR trou du cul OR fdp OR fils de pute OR couille molle OR batard OR ta gueule OR abruti OR idiot OR imbécile OR enfoiré OR putain OR merde OR moins que rien OR ordure OR vas te faire OR casser la gueule) lang:fr -is:retweet -is:quote","tag": "banal"},
-        {"value": "(brise couilles OR casse couille OR mange merde OR ntm OR orchidoclaste) lang:fr -is:retweet -is:quote","tag": "banal"},
-        {"value": "(cotorep OR triso OR attardé OR mongol OR espèce d'handicapé OR autiste OR débile OR gogol) lang:fr -is:retweet -is:quote","tag": "devalorisant"},
-        {"value": "(suicide toi) lang:fr -is:retweet -is:quote","tag": "suicide"},
-        {"value": "(🖕 OR 🖕🏻 OR 🖕🏼 OR 🖕🏽 OR 🖕🏾 OR 🖕🏿) lang:fr -is:retweet -is:quote","tag": "emojis"},
-    ]
+    # sample_rules = [
+    #     # Les règles sont de la forme suivante :
+    #     # {"value": "(mot1 OR mot2 OR mot3 OR ...) lang:fr -is:retweet -is:quote","tag": "nomDeLaRègle"},
+    #     # La valeur "OR" permet de chercher le mot1 OU le mot2 OU le mot3...
+    #     # "lang:fr" permet de récupérer seulement les tweets en français
+    #     # -is:retweet permet de retirer les retweets
+    #     # -is:quote permet de retirer les citations
+    #     # "tag": "nomDeLaRègle" permet de donner un nom à notre règle (utilisé pour le 2e filtrage)
+    #     {"value": "(gouine OR tarlouze OR tantouze OR sodomite OR pédé OR pd OR pédale OR tafiole OR tapette OR travelo OR lopette OR encule OR chbeb) lang:fr -is:retweet -is:quote","tag": "lgbtq"},
+    #     {"value": "(nègre OR bougnoul OR chintoque OR melon OR bamboula OR youpin OR niakoué OR sale noir OR sale juif OR beurette OR beur OR babtou OR blédard OR métèque OR feuj OR boukak OR muzz) lang:fr -is:retweet -is:quote","tag": "racisme"},
+    #     {"value": "(garage à bite OR pute OR sac à foutre OR pétasse OR pouffiasse OR pouffe OR cul OR nique OR salope OR petite bite OR chienne OR mal baisée OR chaudasse OR gaupe OR gueniche) lang:fr -is:retweet -is:quote","tag": "sexuel_misogyne"},
+    #     {"value": "(conne OR connasse OR connard OR con OR counifle) lang:fr -is:retweet -is:quote","tag": "con"},
+    #     {"value": "(ivrogne OR pochtronne OR clochard OR clodo OR plouc OR bouffon) lang:fr -is:retweet -is:quote","tag": "pejoratif"},
+    #     {"value": "(grognasse OR trou du cul OR fdp OR fils de pute OR couille molle OR batard OR ta gueule OR abruti OR idiot OR imbécile OR enfoiré OR putain OR merde OR moins que rien OR ordure OR vas te faire OR casser la gueule) lang:fr -is:retweet -is:quote","tag": "banal"},
+    #     {"value": "(brise couilles OR casse couille OR mange merde OR ntm OR orchidoclaste) lang:fr -is:retweet -is:quote","tag": "banal"},
+    #     {"value": "(cotorep OR triso OR attardé OR mongol OR espèce d'handicapé OR autiste OR débile OR gogol) lang:fr -is:retweet -is:quote","tag": "devalorisant"},
+    #     {"value": "(suicide toi) lang:fr -is:retweet -is:quote","tag": "suicide"},
+    #     {"value": "(🖕 OR 🖕🏻 OR 🖕🏼 OR 🖕🏽 OR 🖕🏾 OR 🖕🏿) lang:fr -is:retweet -is:quote","tag": "emojis"},
+    # ]
+    sample_rules = createRulesFromLists()
     payload = {"add": sample_rules}
     response = requests.post(
         "https://api.twitter.com/2/tweets/search/stream/rules",

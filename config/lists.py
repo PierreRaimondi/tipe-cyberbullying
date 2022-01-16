@@ -90,7 +90,7 @@ banal = {
     'sale gueule':70,
     'brise couilles':100,
     'casse couille': 60,
-    'mange-merde': 100,
+    'mange merde': 100,
     'ntm' : 90,
     'orchidoclaste': 70,
 }
