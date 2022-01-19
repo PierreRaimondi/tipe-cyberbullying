@@ -38,7 +38,7 @@ def delete_all_rules(headers, rules):
     # print(json.dumps(response.json()))
 
 def createRulesFromLists():
-    """Créer les règles pour l'API de Twitter en fonction des listes du fichier \"lists.py\""""
+    """Crée les règles pour l'API de Twitter en fonction des listes du fichier \"lists.py\""""
     lists_names = [i for i in dir(lists) if not i.startswith("__")]
     global_rules = []
     for i in lists_names:
