@@ -29,7 +29,7 @@ def createTweetScore(tweet:Tweet,showOutput:bool = False) -> float:
                     score += text.count(j) * wordValue
                     wordNumber += text.count(j)
                     if showOutput == True:
-                        print("Tweet {} : \"{}\" ({}) détecté {} fois ({})".format(tweet.db_ID,j,wordValue,text.count(j),i))
+                        print(f"Tweet {tweet.db_ID} : \"{j}\" ({wordValue}) détecté {text.count(j)} fois ({i})")
     else:
         lists_names = [i for i in dir(lists) if not i.startswith("__")]
         for i in lists_names:
@@ -40,7 +40,7 @@ def createTweetScore(tweet:Tweet,showOutput:bool = False) -> float:
                     score += text.count(j) * wordValue
                     wordNumber += text.count(j)
                     if showOutput == True:
-                        print("Tweet {} : \"{}\" ({}) détecté {} fois ({})".format(tweet.db_ID,j,wordValue,text.count(j),i))
+                        print(f"Tweet {tweet.db_ID} : \"{j}\" ({wordValue}) détecté {text.count(j)} fois ({i})")
         
     # Attribution du score
     if wordNumber == 0:
@@ -82,12 +82,12 @@ def start(showOutput:bool = False) -> None:
     deletedAuthors = db.deleteAuthors()
     endTime = t.time()
     print("\n")
-    print((" SECOND FILTRAGE TERMINÉ EN {} SECONDES ".format(round(endTime-startTime,2))).center(70,('=')))
-    print((" {} TWEETS FILTRÉS ".format(totalTweets)).center(70,('=')))
+    print((f" SECOND FILTRAGE TERMINÉ EN {round(endTime-startTime,2)} SECONDES ").center(70,('=')))
+    print((f" {totalTweets} TWEETS FILTRÉS ").center(70,('=')))
     if totalTweets == 0:
         tweetRatio = 100
     else:
         tweetRatio = round(((totalTweets-deletedTweets)/totalTweets)*100,2)
-    print((" DONT {} CONSERVÉS ({}%) ET {} SUPPRIMÉS ".format(totalTweets-deletedTweets,tweetRatio,deletedTweets)).center(70,('=')))
-    print((" {} AUTEURS SUPPRIMÉS ".format(deletedAuthors)).center(70,('=')))
+    print((f" DONT {totalTweets-deletedTweets} CONSERVÉS ({tweetRatio}%) ET {deletedTweets} SUPPRIMÉS ").center(70,('=')))
+    print((f" {deletedAuthors} AUTEURS SUPPRIMÉS ").center(70,('=')))
     return None

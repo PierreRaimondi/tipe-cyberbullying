@@ -21,18 +21,16 @@ def apiRequest(userID:int, pagination_token=None):
     "pagination_token" permet d'afficher les 100 tweets d'après.\n
     Renvoie le next_token, s'il existe, None sinon.\n\n
     Limite API : 1500 requêtes/15 mins | 2M tweets/mois"""
-    url = "https://api.twitter.com/2/users/{}/tweets".format(userID)
+    url = f"https://api.twitter.com/2/users/{userID}/tweets"
     params = {"max_results": 100, "tweet.fields": "lang,created_at,possibly_sensitive", "expansions": "author_id,entities.mentions.username"}
     if (pagination_token):
         params["pagination_token"] = pagination_token
-    headers = {"Authorization": "Bearer {}".format(api.bearer_token)}
+    headers = {"Authorization": f"Bearer {api.bearer_token}"}
     response = requests.request("GET", url, headers=headers, params=params)
     if response.status_code != 200:
-        print((" ERREUR LORS DE LA CONNEXION (code {}) ".format(response.status_code)).center(70,('=')))
+        print((f" ERREUR LORS DE LA CONNEXION (code {response.status_code}) ").center(70,('=')))
         raise Exception(
-            "Request returned an error: {} {}".format(
-                response.status_code, response.text
-            )
+            f"Request returned an error: {response.status_code} {response.text}"
         )
     json_response = json.loads(json.dumps(response.json()))
     # print(json.dumps(json_response, indent=4, ensure_ascii=False, sort_keys=True))

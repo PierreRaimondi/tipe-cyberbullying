@@ -18,15 +18,13 @@ class User:
             raise Exception("Pas de nom d'utilisateur défini")
         usernames = "usernames="+str(self.username)
         user_fields = "user.fields=description,created_at"
-        url = "https://api.twitter.com/2/users/by?{}&{}".format(usernames, user_fields)
-        headers = {"Authorization": "Bearer {}".format(api.bearer_token)}
+        url = f"https://api.twitter.com/2/users/by?{usernames}&{user_fields}"
+        headers = {"Authorization": f"Bearer {api.bearer_token}"}
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
-            print((" ERREUR LORS DE LA CONNEXION (code {}) ".format(response.status_code)).center(70,('=')))
+            print((f" ERREUR LORS DE LA CONNEXION (code {response.status_code}) ").center(70,('=')))
             raise Exception(
-                "Request returned an error: {} {}".format(
-                    response.status_code, response.text
-                )
+                f"Request returned an error: {response.status_code} {response.text}"
             )
         jsonResponse = json.loads(json.dumps(response.json()))
         if ('errors' in jsonResponse):
@@ -43,15 +41,13 @@ class User:
             raise Exception("Pas de nom d'utilisateur défini")
         usernames = "usernames="+str(self.username)
         user_fields = "user.fields=description"
-        url = "https://api.twitter.com/2/users/by?{}&{}".format(usernames, user_fields)
-        headers = {"Authorization": "Bearer {}".format(api.bearer_token)}
+        url = f"https://api.twitter.com/2/users/by?{usernames}&{user_fields}"
+        headers = {"Authorization": f"Bearer {api.bearer_token}"}
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
-            print((" ERREUR LORS DE LA CONNEXION (code {}) ".format(response.status_code)).center(70,('=')))
+            print((f" ERREUR LORS DE LA CONNEXION (code {response.status_code}) ").center(70,('=')))
             raise Exception(
-                "Request returned an error: {} {}".format(
-                    response.status_code, response.text
-                )
+                f"Request returned an error: {response.status_code} {response.text}"
             )
         jsonResponse = json.loads(json.dumps(response.json()))
         if ('errors' in jsonResponse):

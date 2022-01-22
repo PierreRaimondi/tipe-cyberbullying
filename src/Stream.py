@@ -9,10 +9,10 @@ def get_rules(headers):
     )
     if response.status_code != 200:
         raise Exception(
-            "Cannot get rules (HTTP {}): {}".format(response.status_code, response.text)
+            f"Cannot get rules (HTTP {response.status_code}): {response.text}"
         )
     rulesNumber = json.loads(json.dumps(response.json()))['meta']['result_count']
-    print((" RÈGLES RÉCUPÉRÉES ({}) ".format(rulesNumber)).center(70,('=')))
+    print((f" RÈGLES RÉCUPÉRÉES ({rulesNumber}) ").center(70,('=')))
     # print(json.dumps(response.json()))
     return response.json()
 
@@ -29,12 +29,10 @@ def delete_all_rules(headers, rules):
     )
     if response.status_code != 200:
         raise Exception(
-            "Cannot delete rules (HTTP {}): {}".format(
-                response.status_code, response.text
-            )
+            f"Cannot delete rules (HTTP {response.status_code}): {response.text}"
         )
     deletedRulesNumber = json.loads(json.dumps(response.json()))['meta']['summary']['deleted']
-    print((" RÈGLES SUPPRIMÉES ({}) ".format(deletedRulesNumber)).center(70,('=')))
+    print((f" RÈGLES SUPPRIMÉES ({deletedRulesNumber}) ").center(70,('=')))
     # print(json.dumps(response.json()))
 
 def createRulesFromLists():
@@ -52,7 +50,7 @@ def createRulesFromLists():
                 for k in rule_words:
                     str_lst += k + " OR "
                 str_lst = str_lst[:-4]
-                global_rules.append({"value": "({}) lang:fr -is:retweet -is:quote".format(str_lst),"tag": "{}".format(i)})
+                global_rules.append({"value": f"({str_lst}) lang:fr -is:retweet -is:quote","tag": f"{i}"})
                 char_count = 0
                 word_count = 0
                 rule_words = []
@@ -64,7 +62,7 @@ def createRulesFromLists():
             for k in rule_words:
                 str_lst += k + " OR "
             str_lst = str_lst[:-4]
-            global_rules.append({"value": "({}) lang:fr -is:retweet -is:quote".format(str_lst),"tag": "{}".format(i)})
+            global_rules.append({"value": f"({str_lst}) lang:fr -is:retweet -is:quote","tag": f"{i}"})
     return global_rules
 
 def set_rules(headers):
@@ -96,11 +94,11 @@ def set_rules(headers):
     )
     if response.status_code != 201:
         raise Exception(
-            "Cannot add rules (HTTP {}): {}".format(response.status_code, response.text)
+            f"Cannot add rules (HTTP {response.status_code}): {response.text}"
         )
     createdRules = json.loads(json.dumps(response.json()))['meta']['summary']['created']
     validRules = json.loads(json.dumps(response.json()))['meta']['summary']['valid']
-    print((" RÈGLES CRÉES ({} dont {} valides) ".format(createdRules,validRules)).center(70,('=')))
+    print((f" RÈGLES CRÉES ({createdRules} dont {validRules} valides) ").center(70,('=')))
     # print(json.dumps(response.json()))
 
 def get_stream(headers, showTweets, insertInDatabase):
@@ -110,11 +108,9 @@ def get_stream(headers, showTweets, insertInDatabase):
     if response.status_code == 200:
         print((" CONNECTÉ AU STREAM ").center(70,('=')))
     else:
-        print((" ERREUR LORS DE LA CONNEXION (code {}) ".format(response.status_code)).center(70,('=')))
+        print((f" ERREUR LORS DE LA CONNEXION (code {response.status_code}) ").center(70,('=')))
         raise Exception(
-            "Cannot get stream (HTTP {}): {}".format(
-                response.status_code, response.text
-            )
+            f"Cannot get stream (HTTP {response.status_code}): {response.text}"
         )
     tweetNumber = 0
     startTime = t.time()
@@ -128,7 +124,7 @@ def get_stream(headers, showTweets, insertInDatabase):
                 print(json.dumps(json_response, indent=4, sort_keys=True, ensure_ascii=False))
             else:
                 elapsedTime = round(t.time() - startTime,2)
-                print("\rTweets récupérés : {} | Rythme : {} tweets/sec".format(tweetNumber, round(tweetNumber/elapsedTime,3)), end='')
+                print(f"\rTweets récupérés : {tweetNumber} | Rythme : {round(tweetNumber/elapsedTime,3)} tweets/sec", end='')
             if insertInDatabase:
                 db.insertNewTweet(tweet)
 
@@ -139,7 +135,7 @@ def start(showTweets:bool=False,insertInDatabase:bool=True,resetRules:bool=False
     insertInDatabase : si True, insère les tweets dans la base de données\n
     resetRules : Si True, réinitialise les règles du filtrage.\n\n
     Limite API (stream) : 50 requêtes/15 mins | 2M tweets/mois"""
-    headers = {"Authorization": "Bearer {}".format(api.bearer_token)}
+    headers = {"Authorization": f"Bearer {api.bearer_token}"}
     rules = get_rules(headers)
     if resetRules:
         delete_all_rules(headers, rules)
