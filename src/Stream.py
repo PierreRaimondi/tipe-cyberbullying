@@ -108,7 +108,7 @@ def get_stream(headers, showTweets, insertInDatabase):
         "https://api.twitter.com/2/tweets/search/stream?expansions=author_id,entities.mentions.username&tweet.fields=lang,created_at,possibly_sensitive", headers=headers, stream=True,
     )
     if response.status_code == 200:
-        print((" CONNECTÉ AU STREAM (code 200) ").center(70,('=')))
+        print((" CONNECTÉ AU STREAM ").center(70,('=')))
     else:
         print((" ERREUR LORS DE LA CONNEXION (code {}) ".format(response.status_code)).center(70,('=')))
         raise Exception(
