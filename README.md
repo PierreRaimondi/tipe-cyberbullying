@@ -22,7 +22,7 @@ Ce TIPE a été réalisé avec l'accès "Elevated".
 
 # Fonctionnement
 
-**L'ensemble des instructions sont à éxécuter depuis le fichier `main.py`**
+**Toutes les commandes sont à exécuter depuis le fichier `main.py`**
 
 ## Premier filtrage
 
@@ -41,7 +41,7 @@ Stream.start()
 - Paramètres :
     - `showTweets` (bool) : désactivé par défaut, permet d'afficher les tweets récupérés.
     - `insertInDatabase` (bool) : activé par défaut, permet d'insérer les tweets récupérés dans la base de données "database.db"
-    - `resetRules` (bool) : désactivé par défaut, permet de mettre à jour les règles définies pour le streal (si des changements ont été effectués par exemple.)
+    - `resetRules` (bool) : désactivé par défaut, permet de mettre à jour les règles définies pour le stream (si des changements ont été effectués par exemple.)
 - Limite API (avec un accès "Elevated"):  
     - 50 requêtes / 15 minutes
     - 2M tweets / mois
@@ -72,34 +72,35 @@ Filtering.start()
     - `showOutput` (bool) : désactivé par défaut, permet d'afficher les termes détectés.
 
 ## Traitement des résultats
+**Toutes les fonctions du module Stats ont, en plus de leurs paramètres respectifs, un paramètre "readable" de type bool, défini sur True par défaut, qui rend les données lisibles pour tout le monde. La fonction affiche alors seulement du texte, et ne renvoie rien.**
 
 ### Statistiques générales
 ```python
 Stats.general()
 ```
-Renvoie le nombre total de tweets et d'auteurs dans la base de données.
+Affiche le nombre total de tweets et d'auteurs dans la base de données.
 
 ### Tweets
 ```python
 Stats.tweetsNumberInAList()
 ```
-Renvoie le nombre de tweets correspondant à une liste particulière.  
+Affiche le nombre de tweets correspondant à une liste particulière.  
 - Paramètres :
-    - **`list`** (str) : lgbtq, racisme, sexuel_misogyne, con, pejoratif, banal, devalorisant, suicide, emojis.
+    - **`list`** (str) : Une des listes du fichier `config/lists.py`
 
 
 ### Auteurs
 ```python
 Stats.authorsWithMoreThanXTweets()
 ```
-Renvoie le nombre d'auteurs apparaissant au moins X fois dans la base de données.  
+Affiche le nombre d'auteurs apparaissant au moins X fois dans la base de données.  
 - Paramètres :
     - **`tweetsNumber`** (int)
 
 ```python
 Stats.topAuthorsUsernames()
 ```
-Renvoie la liste des noms d'utilisateurs des auteurs qui apparaissent le plus de fois dans la base de données.
+Affiche la liste des noms d'utilisateurs des auteurs qui apparaissent le plus de fois dans la base de données.
 - Paramètres :
     - `authorsNumber` (int) : 10 par défaut, représente le nombre d'auteurs à afficher.
     - `showTweetsNumber` (bool) : désactivé par défaut, permet d'afficher le nombre de tweets de l'auteur apparaissant dans la base de données.
@@ -107,7 +108,7 @@ Renvoie la liste des noms d'utilisateurs des auteurs qui apparaissent le plus de
 ```python
 Stats.topAuthorsSensitiveTweetsPercentage()
 ```
-Analyse les derniers tweets des auteurs, et renvoie le pourcentage de tweets qui sont détectés par le second filtrage.
+Analyse les derniers tweets des auteurs, et affiche le pourcentage de tweets qui sont détectés par le second filtrage.
 - Paramètres :
     - `authorsNumber` (int) : 10 par défaut, représente le nombre d'auteurs à afficher.
 
