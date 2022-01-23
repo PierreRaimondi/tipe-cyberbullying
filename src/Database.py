@@ -28,6 +28,7 @@ def getRandomTweet() -> Tweet:
 def getTweetById(tweetID:int) -> Tweet:
     """Renvoie le tweet correspondant à l'ID donné dans la base de données.\n\n
     Si aucun résultat : renvoie un None."""
+    assert type(tweetID) == int, "tweetID doit être de type \"int\""
     c.execute("""SELECT tweets.*, auteurs.username as author_username FROM tweets JOIN auteurs ON auteurs.id = tweets.auteur WHERE tweets.id = ?""", (tweetID,))
     result = c.fetchone()
     if not(result):
@@ -69,6 +70,7 @@ def getTweetWithoutScore() -> Tweet:
 def updateScore(tweetID:int, score:float = None) -> None:
     """Change le score du tweet ayant l'ID indiqué dans la base de données.\n\n
     Si aucun score est entré, change la valeur en \"NULL\""""
+    assert type(tweetID) == int, "tweetID doit être de type \"int\""
     if score:
         c.execute("""UPDATE tweets SET score = ? WHERE id = ?""",(score,tweetID))
         conn.commit()
@@ -80,6 +82,7 @@ def updateScore(tweetID:int, score:float = None) -> None:
 def getTopAuthors(results_number:int = 10) -> List[User]:
     """Renvoie une liste des auteurs qui apparaissent le plus dans la base de données.\n\n
     Nombre d'auteurs par défaut : 10"""
+    assert type(results_number) == int, "results_number doit être de type \"int\""
     lst = []
     c.execute("""SELECT auteurs.id, auteurs.username, auteurs.lien, COUNT(*) as nbTweets FROM auteurs,tweets WHERE auteur = auteurs.id GROUP BY auteurs.id ORDER BY nbTweets DESC LIMIT ?""",(results_number,))
     result = c.fetchall()
@@ -89,6 +92,7 @@ def getTopAuthors(results_number:int = 10) -> List[User]:
 
 def insertNewTweet(tweet:Tweet) -> None:
     """Insère le tweet (et l'auteur si il n'existe pas) dans la base de données."""
+    assert type(tweet) == Tweet, "tweet doit être de type \"tweet\""
     c.execute("""SELECT * FROM auteurs WHERE username = ?""",(tweet.author.username,))
     authorResult = c.fetchone()
     if not(authorResult): # L'auteur n'existe pas
@@ -110,6 +114,7 @@ def insertNewTweet(tweet:Tweet) -> None:
 
 def deleteTweet(tweet:Tweet) -> None:
     """Supprime un tweet de la base de données."""
+    assert type(tweet) == Tweet, "tweet doit être de type \"tweet\""
     if (tweet.db_ID):
         c.execute("""DELETE FROM tweets WHERE id = ?""",(tweet.db_ID,))
         conn.commit()
@@ -146,8 +151,7 @@ def getAuthorCountWithMoreThanXTweets(tweetNumber:int = 0):
 
 def getTweetsNumberByList(list:str):
     """Renvoie le nombre de tweets correspondant à une liste particulière.\n
-    Choix possibles :\n
-    lgbtq, racisme, sexuel_misogyne, con, pejoratif, banal, devalorisant, suicide, emojis"""
+    \"list\" doit être une des listes du fichier \"lists.py\""""
     c.execute("""SELECT COUNT(*) FROM tweets WHERE detecte LIKE ?""",("%"+str(list)+"%",))
     result = c.fetchone()
     return result[0]

@@ -59,6 +59,7 @@ def apiRequest(userID:int, pagination_token=None):
 def getTweets(user:User, showOutput:bool = False) -> None:
     """Démarre l"analyse de l'utilisateur.\n
     Récupère tous ses tweets (dans la limite définie), et les stocke dans la liste \"tweetsList\""""
+    assert type(user) == User, "user doit être de type \"User\""
     global tweetsList, tweetNumber, canContinue
     tweetsList = []
     tweetNumber = 0
@@ -85,6 +86,7 @@ def getTweets(user:User, showOutput:bool = False) -> None:
 
 def getSensitiveTweetPercentage(user:User) -> float:
     """Renvoie le pourcentage de tweets haineux de l'utilisateur"""
+    assert type(user) == User, "user doit être de type \"User\""
     getTweets(user)
     scoreList = [Filtering.createTweetScore(e) for e in tweetsList]
     list_ = [e for e in scoreList if e >= minScore]

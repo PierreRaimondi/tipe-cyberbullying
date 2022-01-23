@@ -11,6 +11,7 @@ minScore = 40
 def createTweetScore(tweet:Tweet,showOutput:bool = False) -> float:
     """Attribue à un tweet son score.\n
     Renvoie le score et modifie également le tweet (tweet.score)."""
+    assert type(tweet) == Tweet, "tweet doit être de type \"Tweet\""
     text = tweet.text
     score = 0
     wordNumber = 0
@@ -54,6 +55,7 @@ def createTweetScore(tweet:Tweet,showOutput:bool = False) -> float:
 def filterTweet(tweet:Tweet) -> int:
     """Filtre le tweet dans la base de données.\n
     Renvoie 1 si le tweet a été gardé, et 0 si le tweet a été supprimé."""
+    assert type(tweet) == Tweet, "tweet doit être de type \"Tweet\""
     if tweet.score != None and tweet.db_ID != None:
         if tweet.score < minScore:
             db.deleteTweet(tweet)
