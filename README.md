@@ -72,7 +72,7 @@ Filtering.start()
     - `showOutput` (bool) : désactivé par défaut, permet d'afficher les termes détectés.
 
 ## Traitement des résultats
-**Toutes les fonctions du module Stats ont, en plus de leurs paramètres respectifs, un paramètre "readable" de type bool, défini sur True par défaut, qui rend les données lisibles pour tout le monde. La fonction affiche alors seulement du texte, et ne renvoie rien.**
+**Toutes les fonctions du module Stats ont, en plus de leurs paramètres respectifs, un paramètre `readable` (bool), défini sur True par défaut, qui rend les données lisibles pour tout le monde. La fonction affiche alors seulement du texte, et ne renvoie rien.**
 
 ### Statistiques générales
 ```python
