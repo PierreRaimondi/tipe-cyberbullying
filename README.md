@@ -3,6 +3,14 @@
 Projet TIPE portant sur le sujet du cyberharcèlement sur les réseaux sociaux.  
 Le but est de détecter des messages haineux sur Twitter, en temps réel.
 
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Fonctionnement](#fonctionnement)
+    - [Premier filtrage](#premier-filtrage)
+    - [Second filtrage](#second-filtrage)
+    - [Traitement des résultats](#traitement-des-résultats)
+- [Nos résultats](#nos-résultats)
+
 # Prérequis
 
 ### Versions utilisées
