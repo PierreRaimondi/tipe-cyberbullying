@@ -1,4 +1,3 @@
-from requests.api import get
 from config import lists
 import src.Database as db
 from src.User import User
