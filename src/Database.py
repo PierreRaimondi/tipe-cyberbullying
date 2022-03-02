@@ -155,3 +155,10 @@ def getTweetsNumberByList(list:str):
     c.execute("""SELECT COUNT(*) FROM tweets WHERE detecte LIKE ?""",("%"+str(list)+"%",))
     result = c.fetchone()
     return result[0]
+
+def getTweetsNumberByWord(word:str):
+    """Renvoie le nombre de tweets contenant un mot ou une expression.\n
+    \"word\" : mot ou expression à chercher."""
+    c.execute("""SELECT COUNT(*) FROM tweets WHERE tweet LIKE ?""",("%"+str(word)+"%",))
+    result = c.fetchone()
+    return result[0]

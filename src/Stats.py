@@ -69,3 +69,12 @@ def topAuthorsSensitiveTweetsPercentage(authorsNumber:int = 10, readable:bool = 
         return None
     else:
         return [(e.username,UserLookup.getSensitiveTweetPercentage(e)) if not(e.isBanned()) else (e.username, 'BANNI') for e in db.getTopAuthors(authorsNumber)]
+
+def tweetsWithWord(word:str, readable:bool = True):
+    """Renvoie le nombre de tweets contenant un mot ou une expression.\n
+    \"word\" : mot ou expression à chercher"""
+    if readable:
+        print(f"La base de données contient {db.getTweetsNumberByWord(word)} tweets contenant \"{str(word)}\".")
+        return None
+    else:
+        return db.getTweetsNumberByWord(word)
