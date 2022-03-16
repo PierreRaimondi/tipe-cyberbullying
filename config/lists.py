@@ -43,7 +43,7 @@ sexuel_misogyne = {
     'nique':36,
     'salope':44,
     'petite bite':32,
-    'chienne':46,
+    'sale chienne':62,
     'mal baisée':76,
     'chaudasse':10,
     'gaupe' :100,
