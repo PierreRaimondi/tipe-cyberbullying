@@ -9,6 +9,7 @@ Le but est de détecter des messages haineux sur Twitter, en temps réel.
     - [Premier filtrage](#premier-filtrage)
     - [Second filtrage](#second-filtrage)
     - [Traitement des résultats](#traitement-des-résultats)
+    - [Affichage des tweets](#affichage-des-tweets)
 - [Nos résultats](#nos-résultats)
 
 # Prérequis
@@ -119,6 +120,54 @@ Stats.topAuthorsSensitiveTweetsPercentage()
 Analyse les derniers tweets des auteurs, et affiche le pourcentage de tweets qui sont détectés par le second filtrage.
 - Paramètres :
     - `authorsNumber` (int) : 10 par défaut, représente le nombre d'auteurs à afficher.
+
+## Affichage des tweets
+Le module **Search** permet de chercher et d'afficher des tweets provenant de la base de données.  
+Les fonctions de ce module n'affichent que du texte.
+
+```python
+Search.random()
+```
+Affiche un tweet aléatoire.
+
+```python
+Search.byID()
+```
+Cherche un tweet avec son ID et l'affiche (s'il existe).
+- Paramètres :
+    - **`id`** (int) : ID à chercher.
+
+```python
+Search.byListName()
+```
+Affiche un ou plusieurs tweets ayant été détectés dans une liste particulière.
+- Paramètres :
+    - **`list`** (str) : une des listes du fichier `config/lists.py`
+    - `limit` (int) : 1 par défaut, représente le nombre de tweets à afficher.
+
+```python
+Search.byText()
+```
+Affiche un ou plusieurs tweets contenant un mot ou une expression en particulier.
+- Paramètres :
+    - **`text`** (str) : texte à chercher.
+    - `limit` (int) : 1 par défaut, représente le nombre de tweets à afficher.
+
+```python
+Search.byScore()
+```
+Affiche un ou plusieurs tweets ayant un score précis.
+- Paramètres :
+    - **`score`** (float) : score à chercher.
+    - `limit` (int) : 1 par défaut, représente le nombre de tweets à afficher.
+
+```python
+Search.byAuthor()
+```
+Affiche un ou plusieurs tweets ayant été écrit par un auteur en particulier.
+- Paramètres :
+    - **`username`** (str) : nom d'utilisateur de l'auteur à chercher.
+    - `limit` (int) : 1 par défaut, représente le nombre de tweets à afficher.
 
 # Nos résultats
 
