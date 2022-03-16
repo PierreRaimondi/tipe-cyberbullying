@@ -3,6 +3,7 @@ from typing import List
 from src.User import User
 from src.Tweet import Tweet
 from datetime import datetime, timedelta
+from config import lists
 conn = sqlite3.connect('./database.db')
 c = conn.cursor()
 
@@ -162,3 +163,85 @@ def getTweetsNumberByWord(word:str):
     c.execute("""SELECT COUNT(*) FROM tweets WHERE tweet LIKE ?""",("%"+str(word)+"%",))
     result = c.fetchone()
     return result[0]
+
+def getTweetsbyList(list:str, limit:int=5):
+    """Renvoie une liste des tweets correspondant à la liste choisie."""
+    lists_names = [i for i in dir(lists) if not i.startswith("__")]
+    assert list in lists_names, f"list doit être parmi les choix suivants : {', '.join(lists_names)}"
+    c.execute("""SELECT tweets.*, auteurs.username as author_username FROM tweets JOIN auteurs ON auteurs.id = tweets.auteur AND detecte LIKE ? ORDER BY RANDOM() LIMIT ?""",("%"+str(list)+"%",limit))
+    results = c.fetchall()
+    tweets = []
+    for result in results:
+        tweet = Tweet()
+        if (result[6] == '1'):
+            possibly_sensitive = True
+        else:
+            possibly_sensitive = False
+        tagged_users = []
+        if (result[5] != ''):
+            tagged_users = result[5].split(",")
+        else:
+            tagged_users = []
+        tweet = Tweet(date=result[1],text=result[2],author_username=result[9],db_authorID=result[3],matching_rules=result[4].split(","),possibly_sensitive=possibly_sensitive,tagged_users=tagged_users,score=result[8],db_tweetID=result[0])
+        tweets.append(tweet)
+    return tweets
+
+def getTweetsByText(text:str, limit:int=1):
+    """Renvoie une liste des tweets contenant le texte."""
+    c.execute("""SELECT tweets.*, auteurs.username as author_username FROM tweets JOIN auteurs ON auteurs.id = tweets.auteur AND tweet LIKE ? ORDER BY RANDOM() LIMIT ?""",("%"+str(text)+"%",limit))
+    results = c.fetchall()
+    tweets = []
+    for result in results:
+        tweet = Tweet()
+        if (result[6] == '1'):
+            possibly_sensitive = True
+        else:
+            possibly_sensitive = False
+        tagged_users = []
+        if (result[5] != ''):
+            tagged_users = result[5].split(",")
+        else:
+            tagged_users = []
+        tweet = Tweet(date=result[1],text=result[2],author_username=result[9],db_authorID=result[3],matching_rules=result[4].split(","),possibly_sensitive=possibly_sensitive,tagged_users=tagged_users,score=result[8],db_tweetID=result[0])
+        tweets.append(tweet)
+    return tweets
+
+def getTweetsByScore(score:float, limit:int=1):
+    """Renvoie une liste des tweets ayant un score précis."""
+    c.execute("""SELECT tweets.*, auteurs.username as author_username FROM tweets JOIN auteurs ON auteurs.id = tweets.auteur AND score = ? ORDER BY RANDOM() LIMIT ?""",(score,limit))
+    results = c.fetchall()
+    tweets = []
+    for result in results:
+        tweet = Tweet()
+        if (result[6] == '1'):
+            possibly_sensitive = True
+        else:
+            possibly_sensitive = False
+        tagged_users = []
+        if (result[5] != ''):
+            tagged_users = result[5].split(",")
+        else:
+            tagged_users = []
+        tweet = Tweet(date=result[1],text=result[2],author_username=result[9],db_authorID=result[3],matching_rules=result[4].split(","),possibly_sensitive=possibly_sensitive,tagged_users=tagged_users,score=result[8],db_tweetID=result[0])
+        tweets.append(tweet)
+    return tweets
+
+def getTweetsByAuthorUsername(username:float, limit:int=1):
+    """Renvoie une liste des tweets d'un auteur précis."""
+    c.execute("""SELECT tweets.*, auteurs.username as author_username FROM tweets JOIN auteurs ON auteurs.id = tweets.auteur AND author_username = ? ORDER BY RANDOM() LIMIT ?""",(username,limit))
+    results = c.fetchall()
+    tweets = []
+    for result in results:
+        tweet = Tweet()
+        if (result[6] == '1'):
+            possibly_sensitive = True
+        else:
+            possibly_sensitive = False
+        tagged_users = []
+        if (result[5] != ''):
+            tagged_users = result[5].split(",")
+        else:
+            tagged_users = []
+        tweet = Tweet(date=result[1],text=result[2],author_username=result[9],db_authorID=result[3],matching_rules=result[4].split(","),possibly_sensitive=possibly_sensitive,tagged_users=tagged_users,score=result[8],db_tweetID=result[0])
+        tweets.append(tweet)
+    return tweets

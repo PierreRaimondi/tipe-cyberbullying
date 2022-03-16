@@ -1,4 +1,4 @@
-import src.Database as db, src.Filtering as Filtering, src.Stream as Stream, src.UserLookup as UserLookup, src.Stats as Stats
+import src.Database as db, src.Filtering as Filtering, src.Stream as Stream, src.UserLookup as UserLookup, src.Stats as Stats, src.Search as Search
 from src.Tweet import Tweet
 from src.User import User
 from config import api, lists
