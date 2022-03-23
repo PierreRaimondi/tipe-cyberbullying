@@ -3,7 +3,7 @@ from src.Tweet import Tweet
 from src.User import User
 from config import api, lists
 
-# Une documentation plus précise est disponible dans le fichier "README.md"
+# Une documentation plus précise est disponible dans le fichier "Documentation.pdf" ou "README.md"
 
 #       Lancer le premier filtrage :
 # Stream.start()
