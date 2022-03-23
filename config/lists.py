@@ -24,13 +24,11 @@ racisme = {
     'sale noir':86,
     'sale juif':40,
     'beurette':18,
-    'beur':12,
     'babtou':34,
     'blédard':36,
     'métèque':30,
     'feuj':10,
     'boukak':50,
-    'muzz':20,
 }
 
 sexuel_misogyne = {
@@ -39,7 +37,6 @@ sexuel_misogyne = {
     'sac à foutre':64,
     'pétasse':34,
     'pouffiasse':70,
-    'pouffe':12,
     'nique':36,
     'salope':44,
     'petite bite':32,
@@ -78,7 +75,7 @@ banal = {
     'idiot':40,
     'imbécile':52,
     'enfoiré':56,
-    'merde':10,
+    'sale merde':66,
     'moins que rien':66,
     'ordure':36,
     'vas te faire':36,
