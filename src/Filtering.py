@@ -70,15 +70,17 @@ def start(showOutput:bool = False) -> None:
     print("\n")
     totalTweets = 0
     deletedTweets = 0
-    tweet = db.getTweetWithoutScore()
-    print("Filtrage des tweets...")
+    tweet, tweetNumber, filteredTweets = db.getTweetWithoutScore(), db.getTweetsNumberWithoutScore(), 0    
     while tweet != None:
         totalTweets += 1
         createTweetScore(tweet,showOutput)
         result = filterTweet(tweet)
+        filteredTweets += 1
+        print(f"\rFiltrage des tweets... {round((filteredTweets/tweetNumber)*100,1)}%", end='')
         if result == 0:
             deletedTweets += 1
         tweet = db.getTweetWithoutScore()
+    print("")
     print("Suppression des auteurs...")
     deletedAuthors = db.deleteAuthors()
     endTime = t.time()

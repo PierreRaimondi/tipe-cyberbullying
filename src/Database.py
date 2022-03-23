@@ -1,5 +1,6 @@
 import sqlite3
 from typing import List
+from unittest import result
 from src.User import User
 from src.Tweet import Tweet
 from datetime import datetime, timedelta
@@ -245,3 +246,9 @@ def getTweetsByAuthorUsername(username:float, limit:int=1):
         tweet = Tweet(date=result[1],text=result[2],author_username=result[9],db_authorID=result[3],matching_rules=result[4].split(","),possibly_sensitive=possibly_sensitive,tagged_users=tagged_users,score=result[8],db_tweetID=result[0])
         tweets.append(tweet)
     return tweets
+
+def getTweetsNumberWithoutScore():
+    """Renvoie le nombre de tweets qui n'a pas de score."""
+    c.execute("""SELECT COUNT(*) FROM tweets WHERE score IS NULL""")
+    results = c.fetchone()
+    return results[0]
