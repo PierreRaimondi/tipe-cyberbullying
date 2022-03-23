@@ -51,7 +51,7 @@ Stream.start()
     - `showTweets` (bool) : désactivé par défaut, permet d'afficher les tweets récupérés.
     - `insertInDatabase` (bool) : activé par défaut, permet d'insérer les tweets récupérés dans la base de données "database.db"
     - `resetRules` (bool) : désactivé par défaut, permet de mettre à jour les règles définies pour le stream (si des changements ont été effectués par exemple.)
-- Limite API (avec un accès "Elevated"):  
+- Limite API (avec un accès "Elevated") :  
     - 50 requêtes / 15 minutes
     - 2M tweets / mois
 
@@ -63,7 +63,7 @@ Stream.start()
 
 Chaque tweet provenant du premier filtrage a été stocké dans la base de données `database.db`, avec un "score" valant "NULL".  
 
-Le "score" correspond a une valeur entre 0 et 100, indiquant la probabilité que le tweet soit effectivement haineux (100 étant la plus haute probabilité). Un score de "NULL" signifie que le tweet n'a pas encore été traité.  
+Le "score" correspond à une valeur entre 0 et 100, indiquant la probabilité que le tweet soit effectivement haineux (100 étant la plus haute probabilité). Un score de "NULL" signifie que le tweet n'a pas encore été traité.  
 
 Le second filtrage permet d'attribuer à un tweet son score. Pour ce faire, nous avons attribué à chaque mot/expression des listes présentes dans le fichier `config/lists.py` une valeur entre 0 et 100. Plus la valeur est élevée, plus le mot ou l'expression a une probabilité élevée d'être lié à un commentaire haineux.  
 _Par exemple, le mot "merde" a une probabilité plus faible d'être lié à un message haineux que l'expression "fils de pute"._  
