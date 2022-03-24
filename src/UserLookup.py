@@ -1,9 +1,7 @@
-import requests
-import json
+import requests, json, src.Filtering as Filtering
 from config import api
 from src.User import User
 from src.Tweet import Tweet
-import src.Filtering as Filtering
 
 # Limite de tweets a récupérer (min : 5)
 tweetLimit = 500

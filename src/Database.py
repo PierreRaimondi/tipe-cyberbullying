@@ -1,6 +1,5 @@
 import sqlite3
 from typing import List
-from unittest import result
 from src.User import User
 from src.Tweet import Tweet
 from datetime import datetime, timedelta
