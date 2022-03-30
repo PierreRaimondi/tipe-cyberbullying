@@ -1,5 +1,4 @@
 import sqlite3
-from typing import List
 from src.User import User
 from src.Tweet import Tweet
 from datetime import datetime, timedelta
@@ -80,7 +79,7 @@ def updateScore(tweetID:int, score:float = None) -> None:
         conn.commit()
     return None
 
-def getTopAuthors(results_number:int = 10) -> List[User]:
+def getTopAuthors(results_number:int = 10) -> list:
     """Renvoie une liste des auteurs qui apparaissent le plus dans la base de données.\n\n
     Nombre d'auteurs par défaut : 10"""
     assert type(results_number) == int, "results_number doit être de type \"int\""
