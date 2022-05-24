@@ -1,6 +1,6 @@
 import sqlite3
-from src.User import User
-from src.Tweet import Tweet
+from classes.User import User
+from classes.Tweet import Tweet
 from datetime import datetime, timedelta
 from config import lists
 conn = sqlite3.connect('./database.db')

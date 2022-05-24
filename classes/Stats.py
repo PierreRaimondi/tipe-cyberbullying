@@ -1,4 +1,4 @@
-import src.Database as db, src.UserLookup as UserLookup
+import classes.Database as db, classes.UserLookup as UserLookup
 from config import lists
 
 def general(readable:bool = True):

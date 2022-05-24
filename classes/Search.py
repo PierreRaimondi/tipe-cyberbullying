@@ -1,5 +1,5 @@
-import src.Database as db
-from src.Tweet import Tweet
+import classes.Database as db
+from classes.Tweet import Tweet
 
 def afficher(tweet:Tweet):
     """Affiche le tweet"""

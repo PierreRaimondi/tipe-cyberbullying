@@ -1,6 +1,6 @@
-import src.Database as db, time as t
+import classes.Database as db, time as t
 from config import lists
-from src.Tweet import Tweet
+from classes.Tweet import Tweet
 
 # Score à partir duquel on garde les tweets
 minScore = 40

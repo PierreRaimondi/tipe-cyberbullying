@@ -1,5 +1,5 @@
 import json
-from src.User import User
+from classes.User import User
 
 class Tweet:
     """Défini un Tweet"""

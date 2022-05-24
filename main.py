@@ -1,4 +1,4 @@
-import src.Filtering as Filtering, src.Stream as Stream, src.Stats as Stats, src.Search as Search
+import classes.Filtering as Filtering, classes.Stream as Stream, classes.Stats as Stats, classes.Search as Search
 
 # Une documentation plus précise est disponible dans le fichier "Documentation.pdf" ou "README.md"
 

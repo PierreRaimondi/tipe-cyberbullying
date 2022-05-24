@@ -1,7 +1,7 @@
-import requests, json, time as t, src.Database as db
+import requests, json, time as t, classes.Database as db
 from config import api, lists
-from src.User import User
-from src.Tweet import Tweet
+from classes.User import User
+from classes.Tweet import Tweet
 
 def get_rules(headers):
     response = requests.get(
