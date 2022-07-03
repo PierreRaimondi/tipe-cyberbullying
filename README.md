@@ -171,4 +171,18 @@ Affiche un ou plusieurs tweets ayant été écrit par un auteur en particulier.
 
 # Nos résultats
 
-_A venir..._
+### Sur une pédiode de 2 ans...
+
+## **58 273** tweets récupérés
+(dont 350 marqués comme potentiellement sensibles par Twitter)
+
+## **44 911** auteurs
+
+## **8 411** auteurs apparaissent au moins 2 fois
+
+## **42** auteurs apparaissent au moins 10 fois
+
+## Parmi les auteurs apparaissant le plus de fois :
+- Le 1er apparaît **30** fois. Il est désormais banni de Twitter.
+- Le 2ème apparaît **28** fois. **32,2%** de ses derniers tweets sont potentiellement haineux. 
+- Le 3ème apparaît **28** fois. **19,6%** de ses derniers tweets sont potentiellement haineux. 
